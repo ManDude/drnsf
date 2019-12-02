@@ -79,15 +79,15 @@ void wgeo_v2::import_entry(TRANSACT, const std::vector<util::blob> &items)
 
         r.begin(&item_vertices[(vertex_count - 1 - i) * 4], 4);
         auto color_mid  = r.read_ubits(4);
-        auto x          = r.read_sbits(12);
+        auto x          = ver == nsf::game_ver::crash3 ? r.read_ubits(12) : r.read_sbits(12);
         auto color_high = r.read_ubits(2);
         auto fx         = r.read_ubits(2);
-        auto z          = r.read_sbits(12);
+        auto z          = ver == nsf::game_ver::crash3 ? r.read_ubits(12) : r.read_sbits(12);
         r.end();
 
         r.begin(&item_vertices[vertex_count * 4 + i * 2], 2);
         auto color_low = r.read_ubits(4);
-        auto y         = r.read_sbits(12);
+        auto y         = ver == nsf::game_ver::crash3 ? r.read_ubits(12) : r.read_sbits(12);
         r.end();
 
         vertex.x = x;
@@ -358,10 +358,10 @@ std::vector<util::blob> wgeo_v2::export_entry(uint32_t &out_type) const
         unsigned int color_mid  = (vertex.color_index >> 4) & 0xF;
 
         w.write_ubits( 4, color_mid);
-        w.write_sbits(12, x);
+        ver == nsf::game_ver::crash3 ? w.write_ubits(12, x) : w.write_sbits(12, x);
         w.write_ubits( 2, color_high);
         w.write_ubits( 2, vertex.fx);
-        w.write_sbits(12, z);
+        ver == nsf::game_ver::crash3 ? w.write_ubits(12, z) : w.write_sbits(12, z);
     }
     for (auto &&vertex : frame->get_vertices()) {
         int y = vertex.y;
@@ -376,7 +376,7 @@ std::vector<util::blob> wgeo_v2::export_entry(uint32_t &out_type) const
         unsigned int color_low = vertex.color_index & 0xF;
 
         w.write_ubits( 4, color_low);
-        w.write_sbits(12, y);
+        ver == nsf::game_ver::crash3 ? w.write_ubits(12, y) : w.write_sbits(12, y);
     }
     w.pad(4);
     item_vertices = w.end();

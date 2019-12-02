@@ -39,6 +39,7 @@ namespace nsf {
  * FIXME explain
  */
 enum class game_ver {
+    none,
     crash1,
     crash2,
     crash3
@@ -207,12 +208,16 @@ protected:
     // (explicit ctor)
     // FIXME explain
     explicit entry(res::project &proj) :
-        asset(proj) {}
+        ver(game_ver::none), asset(proj) {}
 
 public:
     // (typedef) ref
     // FIXME explain
     using ref = res::ref<entry>;
+
+    // (var) ver
+    // FIXME explain
+    game_ver ver;
 
     // (prop) eid
     // FIXME explain
@@ -267,7 +272,7 @@ public:
     // (func) process_as<T>
     // FIXME explain
     template <typename T>
-    void process_as(TRANSACT)
+    void process_as(TRANSACT, game_ver ver)
     {
         assert_alive();
 
@@ -276,6 +281,10 @@ public:
         res::ref<T> result = get_name();
         rename(TS, result / "_RAW");
         result.create(TS, get_proj());
+
+        // Assign the imported game version
+        // FIXME move to import_entry? or somewhere else?
+        result->ver = ver;
 
         // Process the raw items into the output entry.
         result->set_eid(TS, get_eid());
@@ -307,62 +316,6 @@ public:
     // (typedef) ref
     // FIXME explain
     using ref = res::ref<wgeo_v2>;
-
-    // (prop) info_unk0
-    // FIXME explain
-    DEFINE_APROP(info_unk0, uint32_t);
-
-    // (prop) tpag_ref_count, tpag_ref*
-    DEFINE_APROP(tpag_ref_count, uint32_t);
-    DEFINE_APROP(tpag_ref0, uint32_t);
-    DEFINE_APROP(tpag_ref1, uint32_t);
-    DEFINE_APROP(tpag_ref2, uint32_t);
-    DEFINE_APROP(tpag_ref3, uint32_t);
-    DEFINE_APROP(tpag_ref4, uint32_t);
-    DEFINE_APROP(tpag_ref5, uint32_t);
-    DEFINE_APROP(tpag_ref6, uint32_t);
-    DEFINE_APROP(tpag_ref7, uint32_t);
-
-    // (prop) item4
-    // FIXME explain
-    DEFINE_APROP(item4, util::blob);
-
-    // (prop) item6
-    // FIXME explain
-    DEFINE_APROP(item6, util::blob);
-
-    // (prop) world
-    // FIXME explain
-    DEFINE_APROP(world, gfx::world::ref);
-
-    // (func) import_entry
-    // FIXME explain
-    void import_entry(TRANSACT, const std::vector<util::blob> &items);
-
-    // (func) export_entry
-    // FIXME explain
-    std::vector<util::blob> export_entry(
-        uint32_t &out_type) const final override;
-};
-
-/*
- * nsf::wgeo_v3
- *
- * FIXME explain
- */
-class wgeo_v3 : public entry {
-    friend class res::asset;
-
-private:
-    // (explicit ctor)
-    // FIXME explain
-    explicit wgeo_v3(res::project &proj) :
-        entry(proj) {}
-
-public:
-    // (typedef) ref
-    // FIXME explain
-    using ref = res::ref<wgeo_v3>;
 
     // (prop) info_unk0
     // FIXME explain
@@ -595,106 +548,6 @@ struct asset_prop_info<nsf::wgeo_v2, 12> {
 
     static constexpr const char *name = "world";
     static constexpr auto ptr = &nsf::wgeo_v2::p_world;
-};
-
-// reflection info for nsf::wgeo_v3
-template <>
-struct asset_type_info<nsf::wgeo_v3> {
-    using base_type = nsf::entry;
-
-    static constexpr const char *name = "nsf::wgeo_v3";
-    static constexpr int prop_count = 13;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 0> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "info_unk0";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_info_unk0;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 1> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref_count";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref_count;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 2> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref0";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref0;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 3> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref1";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref1;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 4> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref2";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref2;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 5> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref3";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref3;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 6> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref4";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref4;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 7> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref5";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref5;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 8> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref6";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref6;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 9> {
-    using type = uint32_t;
-
-    static constexpr const char *name = "tpag_ref7";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_tpag_ref7;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 10> {
-    using type = util::blob;
-
-    static constexpr const char *name = "item4";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_item4;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 11> {
-    using type = util::blob;
-
-    static constexpr const char *name = "item6";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_item6;
-};
-template <>
-struct asset_prop_info<nsf::wgeo_v3, 12> {
-    using type = gfx::world::ref;
-
-    static constexpr const char *name = "world";
-    static constexpr auto ptr = &nsf::wgeo_v3::p_world;
 };
 
 }
