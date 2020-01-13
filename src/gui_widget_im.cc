@@ -476,7 +476,7 @@ widget_im::widget_im(container &parent, layout layout) :
     // clashes with most other defaults.
     auto &style = ImGui::GetStyle();
     style.WindowRounding = 0.0f;
-    ImVec4 default_color = { 1.0f, 0.0f, 1.0f, 0.25f };
+    ImVec4 default_color = { 1.0f, 0.0f, 0.0f, 0.25f };
     style.Colors[ImGuiCol_Text]                  = { 0.0f, 0.0f, 0.0f, 1.0f };
     style.Colors[ImGuiCol_TextDisabled]          = default_color;
     style.Colors[ImGuiCol_WindowBg]              = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -492,18 +492,18 @@ widget_im::widget_im(container &parent, layout layout) :
     style.Colors[ImGuiCol_TitleBgCollapsed]      = default_color;
     style.Colors[ImGuiCol_MenuBarBg]             = default_color;
     style.Colors[ImGuiCol_ScrollbarBg]           = { 0.0f, 0.0f, 0.0f, 0.125f };
-    style.Colors[ImGuiCol_ScrollbarGrab]         = { 1.0f, 0.5f, 0.0f, 0.25f };
-    style.Colors[ImGuiCol_ScrollbarGrabHovered]  = { 1.0f, 0.5f, 0.0f, 0.5f };
-    style.Colors[ImGuiCol_ScrollbarGrabActive]   = { 1.0f, 0.5f, 0.0f, 1.0f };
+    style.Colors[ImGuiCol_ScrollbarGrab]         = { 1.0f, 0.0f, 0.0f, 0.25f };
+    style.Colors[ImGuiCol_ScrollbarGrabHovered]  = { 1.0f, 0.0f, 0.0f, 0.5f };
+    style.Colors[ImGuiCol_ScrollbarGrabActive]   = { 1.0f, 0.0f, 0.0f, 1.0f };
     style.Colors[ImGuiCol_CheckMark]             = default_color;
     style.Colors[ImGuiCol_SliderGrab]            = default_color;
     style.Colors[ImGuiCol_SliderGrabActive]      = default_color;
-    style.Colors[ImGuiCol_Button]                = { 1.0f, 0.5f, 0.0f, 0.25f };
-    style.Colors[ImGuiCol_ButtonHovered]         = { 1.0f, 0.5f, 0.0f, 0.5f };
-    style.Colors[ImGuiCol_ButtonActive]          = { 1.0f, 0.5f, 0.0f, 1.0f };
-    style.Colors[ImGuiCol_Header]                = { 1.0f, 0.5f, 0.0f, 0.25f };
-    style.Colors[ImGuiCol_HeaderHovered]         = { 1.0f, 0.5f, 0.0f, 0.5f };
-    style.Colors[ImGuiCol_HeaderActive]          = { 1.0f, 0.5f, 0.0f, 1.0f };
+    style.Colors[ImGuiCol_Button]                = { 1.0f, 0.0f, 0.0f, 0.25f };
+    style.Colors[ImGuiCol_ButtonHovered]         = { 1.0f, 0.0f, 0.0f, 0.5f };
+    style.Colors[ImGuiCol_ButtonActive]          = { 1.0f, 0.0f, 0.0f, 1.0f };
+    style.Colors[ImGuiCol_Header]                = { 1.0f, 0.0f, 0.0f, 0.25f };
+    style.Colors[ImGuiCol_HeaderHovered]         = { 1.0f, 0.0f, 0.0f, 0.5f };
+    style.Colors[ImGuiCol_HeaderActive]          = { 1.0f, 0.0f, 0.0f, 1.0f };
     style.Colors[ImGuiCol_Separator]             = default_color;
     style.Colors[ImGuiCol_SeparatorHovered]      = default_color;
     style.Colors[ImGuiCol_SeparatorActive]       = default_color;
