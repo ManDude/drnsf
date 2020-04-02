@@ -1,6 +1,6 @@
 //
 // DRNSF - An unofficial Crash Bandicoot level editor
-// Copyright (C) 2017-2019  DRNSF contributors
+// Copyright (C) 2017-2020  DRNSF contributors
 //
 // See the AUTHORS.md file for more details.
 //
@@ -143,6 +143,12 @@ void binwriter::write_sbits(int bits, int64_t value)
     u_value >>= 64 - bits;
 
     write_ubits(bits, u_value);
+}
+
+// declared in util.hh
+void binwriter::write_bytes(util::blob data)
+{
+    m_data.insert(m_data.end(), data.begin(), data.end());
 }
 
 // declared in util.hh

@@ -1,6 +1,6 @@
 //
 // DRNSF - An unofficial Crash Bandicoot level editor
-// Copyright (C) 2017-2019  DRNSF contributors
+// Copyright (C) 2017-2020  DRNSF contributors
 //
 // See the AUTHORS.md file for more details.
 //
@@ -64,9 +64,17 @@ void mni_open<GameVersion>::on_activate()
         // Process all of the pages in the new NSF asset.
         for (misc::raw_data::ref page : nsf_asset->get_pages()) {
 
-            // Pages with type 1 cannot be processed as normal pages.
-            if (page->get_data()[2] == 1)
+            // Pages with type 1 should be processed as texture pages.
+            if (page->get_data()[2] == 1) {
+                nsf::tpage::ref tpage = page;
+                page->rename(TS, page / "_PROCESSING");
+                page /= "_PROCESSING";
+                tpage.create(TS, proj);
+                tpage->import_file(TS, page->get_data());
+                page->destroy(TS);
+                
                 continue;
+            }
 
             nsf::spage::ref spage = page;
             page->rename(TS, page / "_PROCESSING");
@@ -93,7 +101,8 @@ void mni_open<GameVersion>::on_activate()
                     proj.get_asset_root() /
                     "entries" /
                     entry->get_eid().str();
-                entry->rename(TS, new_path);
+                if (!new_path.get())
+                    entry->rename(TS, new_path);
                 entry = new_path;
                 p = new_path;
 
