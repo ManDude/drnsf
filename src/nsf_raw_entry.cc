@@ -100,7 +100,7 @@ bool raw_entry::process_by_type(TRANSACT, game_ver ver)
     case game_ver::crash1:
         switch (get_type()) {
         case 3:
-            process_as<wgeo_v1>(TS);
+            process_as<wgeo_v1>(TS, ver);
             return true;
         }
         break;
