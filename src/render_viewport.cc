@@ -163,7 +163,7 @@ void viewport::impl::draw_gl(int width, int height, unsigned int rbo)
 
     // Build the projection matrix.
     e.projection = glm::infinitePerspective(
-        glm::radians(80.0f),
+        glm::radians(60.0f),
         static_cast<float>(width) / height,
         200.0f
     );
