@@ -36,9 +36,9 @@ int bitfieldExtract(int a, int b, int c)
 vec3 unpackBGR555(int value)
 {
     return vec3(
-        bitfieldExtract(value, 0, 5) / 32.0,
-        bitfieldExtract(value, 5, 5) / 32.0,
-        bitfieldExtract(value, 10, 5) / 32.0
+        bitfieldExtract(value, 0, 5) / 31.0,
+        bitfieldExtract(value, 5, 5) / 31.0,
+        bitfieldExtract(value, 10, 5) / 31.0
     );
 }
 
